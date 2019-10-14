@@ -1,0 +1,75 @@
+all printables
+
+(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+  'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+   'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+     'X', 'Y', 'Z', '!', '"', '#', '$', '%', '&', "'", '(', ')',
+      '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>',
+       '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}',
+            '~', ' ', '\t', '\n', '\r', '\x0b', '\x0c'], [])
+
+
+b'YQ=='
+
+
+import base64, string, sys
+from random import shuffle
+out = base64.b64encode(b'a')
+print(out)
+
+
+x = 'z' ord(x) = 122
+r = '\x0b' ord(r) = 11
+122-11 = 111 + 100 = 211 % 100 = 11 = diff
+
+ord(r) = 11  diff = 11
+for (i = -1; i < 2; i += 1)
+{
+     candidate = ord(r) + diff + i*100;
+     if (candidate in base64)
+          break
+}
+
+x = '+' ord(x) = 48
+r = 'N' ord(r) = 49
+48 - 49 = -1  + 100 = 99 
+122-11 = 111 + 100 = 211 % 100 = 11 = diff
+
+solving simple case: 
+
+start at EOF 
+go back until we find null char (\x00) 
+     (if no null char, we haven't shuffled. 
+     trivial case. 
+     follow printable char list until we see unexpected character)
+next char is start of data (record start pos)
+go fwd length of printable bag (100) 
+     (if in special case < 100 char in input, find character out of order)
+end of encoded data (record end pos)
+encoded data is [start pos - end pos)
+end of encoded data to end of block (EOF first time) - buffer data
+calculate diffs using character frequency
+use r values to determine mapping
+apply mapping to encoded data to get original data 
+go back to null char (is now EOF)
+loop
+
+start at beginning
+go forward, making list of characters seen
+first repeated character is start of buffer
+go until null. First repeat to null char is buffer.
+analyze buffer for frequency to find r and diff pairs
+use r,diff pair to find original base64 char
+make map of enocode -> decoded characters, solve data section
+go to next null char
+loop
+
+
+for finding repeats: initialize dictionary of all printable characters
+dict (char -> int)
+init to 0
+when we see a character, add one to it. 
+     if value is non-zero, we've seen it before. (end of data, start of buffer)
+for every character we see until null, add one to dict entry
